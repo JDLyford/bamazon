@@ -1,6 +1,8 @@
+// Required npms to run
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+// Initial connection to mysql
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -9,14 +11,17 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
+// Starting function
 manage();
+// Function that allows user to choose what they want to do
 function manage() {
     inquirer.prompt([{
         name: "manage",
         type: "rawlist",
-        message: "Wat do you want!",
+        message: "What would you like?",
         choices: ["Product for sale", "Low Inventory", "Add to Inventory", "Add New Product"]
     }]).then(function (ans) {
+        // Switch to split program into four main areas and thier functions
         switch (ans.manage) {
             case "Product for sale":
                 forSale();
@@ -34,22 +39,25 @@ function manage() {
     })
 };
 
+// Function that displays current products
 function forSale() {
-    connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err;
-
-        console.log('-------------------------------------------------');
-        for (var i = 0; i < res.length; i++) {
-            console.log("Id: " + res[i].id + " -- " +
-                res[i].product_name + " -- " +
-                res[i].department_name + " -- " +
-                res[i].price + " -- " +
-                res[i].stock_quantity);
-        }
-    })
+    showAll();
     connection.end();
 };
 
+function showAll() {
+    connection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+
+        console.log("---------------------------------------------");
+        for (var i = 0; i < results.length; i++) {
+            console.log("Id: " + results[i].id + " -- " + results[i].product_name + " -- "
+                + results[i].department_name + " -- " + results[i].price + "-- " + results[i].stock_quantity);
+        }
+    });
+}
+
+// Displays all inventory that has a quantity less than 5
 function lowInv() {
     var lowInvList = [];
     connection.query("SELECT * FROM products", function (err, res) {
@@ -70,10 +78,11 @@ function lowInv() {
     connection.end();
 };
 
-
+// Function that allows user to input quantity through prompts
 function addInv() {
     var newAmount;
     var newInvt;
+    showAll();
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         inquirer.prompt([{
@@ -83,8 +92,9 @@ function addInv() {
         }, {
             name: "amountAdd",
             type: "input",
-            message: "How many does it have now?"
+            message: "How much would you like to add?"
         }]).then(function (ans) {
+            // Adds input to current amount
             for (var i = 0; i < res.length; i++) {
                 if (res[i].id == ans.productIdN) {
                     newAmount = res[i];
@@ -103,7 +113,7 @@ function addInv() {
     })
 };
 
-
+// Function allowing user to add a new product through prompts
 function addNewProduct() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -124,6 +134,7 @@ function addNewProduct() {
             type: "input",
             message: "What is the stock amount"
         }]).then(function (ans) {
+            // Inserts new product into database
             connection.query("INSERT INTO products SET ?", {
                 product_name: ans.pname,
                 department_name: ans.dname,
@@ -132,6 +143,7 @@ function addNewProduct() {
             }, function (err) {
                 if (err) throw err;
                 console.log("Product added");
+                showAll();
                 connection.end();
             })
         })
