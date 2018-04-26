@@ -16,25 +16,25 @@ SELECT * FROM products;
 
 
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("T-shirt 01", "clothing", 20.00, 5);
+value ("Black T-shirt", "clothing", 20.00, 5);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("T-shirt 02", "clothing", 22.00, 7);
+value ("Blue T-shirt", "clothing", 22.00, 7);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("T-shirt 03", "clothing", 25.00, 5);
+value ("White T-shirt", "clothing", 25.00, 5);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("Shoes 01", "shoes", 25.00, 5);
+value ("Nike", "shoes", 25.00, 5);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("Shoes 02", "shoes", 25.00, 7);
+value ("New balance", "shoes", 25.00, 7);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("Shoes 03", "shoes", 31.00, 5);
+value ("Dress Shoes", "shoes", 31.00, 5);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("Shoes 04", "shoes", 61.00, 1);
+value ("Condor", "shoes", 61.00, 1);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("pajama", "clothing", 15.00, 3);
+value ("Pajamas", "clothing", 15.00, 3);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("pajama", "clothing", 25.00, 33);
+value ("Gown", "clothing", 25.00, 33);
 insert into products (product_name, department_name, Price, Stock_quantity)
-value ("pajama", "clothing", 11.00, 51);
+value ("Robe", "clothing", 11.00, 51);
 
 
 );
